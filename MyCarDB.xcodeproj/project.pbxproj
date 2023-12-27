@@ -7,9 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7564B4872B3B8C9A00349E7F /* CarItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7564B4862B3B8C9A00349E7F /* CarItemCollectionViewCell.swift */; };
 		75E583462B3B7DDF006B1ACC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E583452B3B7DDF006B1ACC /* AppDelegate.swift */; };
 		75E583482B3B7DDF006B1ACC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E583472B3B7DDF006B1ACC /* SceneDelegate.swift */; };
-		75E5834A2B3B7DDF006B1ACC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E583492B3B7DDF006B1ACC /* ViewController.swift */; };
+		75E5834A2B3B7DDF006B1ACC /* CarListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E583492B3B7DDF006B1ACC /* CarListViewController.swift */; };
 		75E5834D2B3B7DDF006B1ACC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 75E5834B2B3B7DDF006B1ACC /* Main.storyboard */; };
 		75E583502B3B7DDF006B1ACC /* MyCarDB.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 75E5834E2B3B7DDF006B1ACC /* MyCarDB.xcdatamodeld */; };
 		75E583522B3B7DE2006B1ACC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75E583512B3B7DE2006B1ACC /* Assets.xcassets */; };
@@ -17,10 +18,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7564B4862B3B8C9A00349E7F /* CarItemCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarItemCollectionViewCell.swift; sourceTree = "<group>"; };
 		75E583422B3B7DDF006B1ACC /* MyCarDB.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyCarDB.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		75E583452B3B7DDF006B1ACC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		75E583472B3B7DDF006B1ACC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		75E583492B3B7DDF006B1ACC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		75E583492B3B7DDF006B1ACC /* CarListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarListViewController.swift; sourceTree = "<group>"; };
 		75E5834C2B3B7DDF006B1ACC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		75E5834F2B3B7DDF006B1ACC /* MyCarDB.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MyCarDB.xcdatamodel; sourceTree = "<group>"; };
 		75E583512B3B7DE2006B1ACC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -60,7 +62,8 @@
 			children = (
 				75E583452B3B7DDF006B1ACC /* AppDelegate.swift */,
 				75E583472B3B7DDF006B1ACC /* SceneDelegate.swift */,
-				75E583492B3B7DDF006B1ACC /* ViewController.swift */,
+				75E583492B3B7DDF006B1ACC /* CarListViewController.swift */,
+				7564B4862B3B8C9A00349E7F /* CarItemCollectionViewCell.swift */,
 				75E5834B2B3B7DDF006B1ACC /* Main.storyboard */,
 				75E583512B3B7DE2006B1ACC /* Assets.xcassets */,
 				75E583532B3B7DE2006B1ACC /* LaunchScreen.storyboard */,
@@ -141,9 +144,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				75E5834A2B3B7DDF006B1ACC /* ViewController.swift in Sources */,
+				75E5834A2B3B7DDF006B1ACC /* CarListViewController.swift in Sources */,
 				75E583462B3B7DDF006B1ACC /* AppDelegate.swift in Sources */,
 				75E583502B3B7DDF006B1ACC /* MyCarDB.xcdatamodeld in Sources */,
+				7564B4872B3B8C9A00349E7F /* CarItemCollectionViewCell.swift in Sources */,
 				75E583482B3B7DDF006B1ACC /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
