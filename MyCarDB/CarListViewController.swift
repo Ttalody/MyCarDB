@@ -20,7 +20,8 @@ class CarListViewController: UIViewController {
     }
 
     @IBAction func addButtonDidTap(_ sender: Any) {
-        
+        let vc = storyboard?.instantiateViewController(identifier: "DetailsViewController")
+        navigationController?.pushViewController(vc!, animated: true)
     }
     
 }
@@ -34,13 +35,18 @@ extension CarListViewController: UICollectionViewDelegate, UICollectionViewDataS
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CarItemCollectionViewCell.identifier, for: indexPath) as? CarItemCollectionViewCell else { return UICollectionViewCell() }
-        cell.setupCell(name: "Blank", image: UIImage(imageLiteralResourceName: "blank"))
+        cell.setupCell(name: "blank", image: UIImage(imageLiteralResourceName: "blankCar"))
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let vc = storyboard?.instantiateViewController(identifier: "DetailsViewController")
-        navigationController?.pushViewController(vc!, animated: true)
+        let vc = storyboard?.instantiateViewController(identifier: "DetailsViewController") as! DetailsViewController
+        vc.loadView()
+        if let image = UIImage(named: "blankCar") {
+            vc.setupVC(image: image)
+        }
+        
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
 

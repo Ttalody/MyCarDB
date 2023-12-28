@@ -9,6 +9,8 @@ import UIKit
 
 class DetailsViewController: UIViewController {
     
+    static let identifier = "DetailsViewController"
+    
     @IBOutlet weak var carImageVIew: UIImageView!
     
     @IBOutlet weak var changeImageButton: UIButton!
@@ -27,7 +29,7 @@ class DetailsViewController: UIViewController {
     
     @IBOutlet weak var colorLabel: UILabel!
     
-    @IBOutlet weak var colorPickerView: UIPickerView!
+    @IBOutlet weak var colorTextField: UITextField!
     
     @IBOutlet weak var saveButton: UIButton!
     
@@ -35,13 +37,15 @@ class DetailsViewController: UIViewController {
         super.viewDidLoad()
 
         
-        
         setupSaveButton()
         setupImageView()
     }
     
 
-
+    func setupVC(image: UIImage) {
+        carImageVIew.image = image
+    }
+    
     private func setupSaveButton() {
         saveButton.layer.cornerRadius = 15
         saveButton.layer.borderColor = saveButton.tintColor.cgColor
