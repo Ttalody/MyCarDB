@@ -9,6 +9,8 @@ import UIKit
 
 class CarListViewController: UIViewController {
 
+    @IBOutlet weak var addButton: UIBarButtonItem!
+    
     @IBOutlet weak var carListCollectionView: UICollectionView!
     
     override func viewDidLoad() {
@@ -17,6 +19,10 @@ class CarListViewController: UIViewController {
         carListCollectionView.dataSource = self
     }
 
+    @IBAction func addButtonDidTap(_ sender: Any) {
+        
+    }
+    
 }
 
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource
@@ -28,11 +34,14 @@ extension CarListViewController: UICollectionViewDelegate, UICollectionViewDataS
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CarItemCollectionViewCell.identifier, for: indexPath) as? CarItemCollectionViewCell else { return UICollectionViewCell() }
-        
+        cell.setupCell(name: "Blank", image: UIImage(imageLiteralResourceName: "blank"))
         return cell
     }
     
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = storyboard?.instantiateViewController(identifier: "DetailsViewController")
+        navigationController?.pushViewController(vc!, animated: true)
+    }
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout

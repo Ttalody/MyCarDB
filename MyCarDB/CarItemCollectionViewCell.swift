@@ -15,7 +15,8 @@ class CarItemCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var carItemLabel: UILabel!
     
-    func setupCell(){
-        // TODO: Implement a setup for cell
+    func setupCell(name: String, image: UIImage){
+        self.carItemImageView.image = image
+        self.carItemLabel.text = name
     }
 }
