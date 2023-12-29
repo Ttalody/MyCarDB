@@ -95,7 +95,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="blank" translatesAutoresizingMaskIntoConstraints="NO" id="8gM-yM-cuE">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="blankCar" translatesAutoresizingMaskIntoConstraints="NO" id="8gM-yM-cuE">
                                 <rect key="frame" x="16" y="103" width="361" height="190"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="190" id="7ze-4G-90W"/>
@@ -261,7 +261,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="blank" width="883" height="498"/>
+        <image name="blankCar" width="626" height="375"/>
         <image name="camera" catalog="system" width="128" height="93"/>
         <systemColor name="secondaryLabelColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
