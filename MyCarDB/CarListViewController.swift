@@ -22,11 +22,15 @@ final class CarListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        reloadData()
-        
         carListCollectionView.delegate = self
         carListCollectionView.dataSource = self
         carListCollectionView.collectionViewLayout = UICollectionViewFlowLayout()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
+        self.reloadData()
     }
 
     @IBAction func addButtonDidTap(_ sender: Any) {
@@ -41,13 +45,14 @@ final class CarListViewController: UIViewController {
 
 extension CarListViewController: DetailsViewControllerDelegate {
     func reloadData() {
-        CoreDataManager.shared.fetchDataFromLocalStorage { [weak self] result in
-            switch result {
-            case .success(let cars): self?.carsArray = cars
-            case .failure(let error): print(error.localizedDescription)
-            }
-        }
         DispatchQueue.main.async { [weak self] in
+            CoreDataManager.shared.fetchDataFromLocalStorage { [weak self] result in
+                switch result {
+                case .success(let cars): self?.carsArray = cars
+                case .failure(let error): print(error.localizedDescription)
+                }
+            }
+            
             self?.carListCollectionView.reloadData()
         }
     }

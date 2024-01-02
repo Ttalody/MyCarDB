@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 final class CoreDataManager {
     
@@ -46,6 +47,28 @@ final class CoreDataManager {
         } catch {
             completion(.failure(error))
         }
+    }
+    
+    func updateItem(id: NSManagedObjectID, newItem: CarItemModel, completion: (Result<Void, Error>) -> Void) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        
+        let context = appDelegate.persistentContainer.viewContext
+        
+        do {
+            let carItem = try context.existingObject(with: id)
+            carItem.setValue(newItem.name, forKey: "name")
+            carItem.setValue(newItem.producer, forKey: "producer")
+            carItem.setValue(newItem.image, forKey: "image")
+            carItem.setValue(newItem.color, forKey: "color")
+            carItem.setValue(newItem.year, forKey: "year")
+            
+            try context.save()
+            
+            completion(.success(()))
+        } catch {
+            completion(.failure(error))
+        }
+        
     }
     
     func deleteItem(item: CarModel, completion: @escaping (Result<Void, Error>) -> Void) {

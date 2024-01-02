@@ -6,12 +6,15 @@
 //
 
 import UIKit
+import CoreData
 
 final class DetailsViewController: UIViewController {
     
     static let identifier = "DetailsViewController"
     
     weak var delegate: CarListViewController?
+    
+    private var objectId: NSManagedObjectID?
     
     @IBOutlet weak var carImageVIew: UIImageView!
     
@@ -57,6 +60,8 @@ final class DetailsViewController: UIViewController {
         modelTextField.text = model.name
         producerTextField.text = model.producer
         colorTextField.text = model.color
+        
+        objectId = model.objectID
     }
     
     func setupVC() {
@@ -95,20 +100,29 @@ final class DetailsViewController: UIViewController {
         guard let image = self.carImageVIew.image,
               let name = self.modelTextField.text,
               let producer = self.producerTextField.text,
-//              let year = Date(),
               let color = self.colorTextField.text
         else { return }
+        
         let carItem = CarItemModel(image: image,
                                    name: name,
                                    producer: producer,
                                    year: Date(),
                                    color: color)
         
-        CoreDataManager.shared.addItem(carItem) { result in
-            switch result {
-            case .success(): self.delegate?.reloadData()
-                self.navigationController?.popViewController(animated: true)
-            case .failure(let error): print(error.localizedDescription)
+        if let id = objectId {
+            CoreDataManager.shared.updateItem(id: id, newItem: carItem) { result in
+                switch result {
+                case .success(): self.navigationController?.popViewController(animated: true)
+                case .failure(let error): print(error.localizedDescription)
+                }
+            }
+        }
+        else {
+            CoreDataManager.shared.addItem(carItem) { result in
+                switch result {
+                case .success(): self.navigationController?.popViewController(animated: true)
+                case .failure(let error): print(error.localizedDescription)
+                }
             }
         }
     }
