@@ -7,7 +7,13 @@
 
 import UIKit
 
-class CarListViewController: UIViewController {
+protocol DetailsViewControllerDelegate {
+    func reloadData()
+}
+
+final class CarListViewController: UIViewController {
+    
+    private var carsArray = [CarModel]()
 
     @IBOutlet weak var addButton: UIBarButtonItem!
     
@@ -15,45 +21,83 @@ class CarListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        reloadData()
+        
         carListCollectionView.delegate = self
         carListCollectionView.dataSource = self
+        carListCollectionView.collectionViewLayout = UICollectionViewFlowLayout()
     }
 
     @IBAction func addButtonDidTap(_ sender: Any) {
-        let vc = storyboard?.instantiateViewController(identifier: "DetailsViewController")
-        navigationController?.pushViewController(vc!, animated: true)
+        guard let vc = storyboard?.instantiateViewController(identifier: "DetailsViewController") as? DetailsViewController else { return }
+        vc.loadView()
+        vc.delegate = self
+        vc.viewDidLoad()
+        vc.setupVC()
+        navigationController?.pushViewController(vc, animated: true)
     }
-    
+}
+
+extension CarListViewController: DetailsViewControllerDelegate {
+    func reloadData() {
+        CoreDataManager.shared.fetchDataFromLocalStorage { [weak self] result in
+            switch result {
+            case .success(let cars): self?.carsArray = cars
+            case .failure(let error): print(error.localizedDescription)
+            }
+        }
+        DispatchQueue.main.async { [weak self] in
+            self?.carListCollectionView.reloadData()
+        }
+    }
 }
 
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 
 extension CarListViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        6
+        carsArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CarItemCollectionViewCell.identifier, for: indexPath) as? CarItemCollectionViewCell else { return UICollectionViewCell() }
-        cell.setupCell(name: "blank", image: UIImage(imageLiteralResourceName: "blankCar"))
+        cell.setupCell(model: carsArray[indexPath.row])
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let vc = storyboard?.instantiateViewController(identifier: "DetailsViewController") as! DetailsViewController
+        guard let vc = storyboard?.instantiateViewController(identifier: "DetailsViewController") as? DetailsViewController else { return }
         vc.loadView()
-        if let image = UIImage(named: "blankCar") {
-            vc.setupVC(image: image)
-        }
+        vc.viewDidLoad()
+        vc.setupVC(model: carsArray[indexPath.row])
         
         navigationController?.pushViewController(vc, animated: true)
     }
+    
+    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        let config = UIContextMenuConfiguration(identifier: nil,
+                                                        previewProvider: nil) { [weak self] _ in
+                    let deleteAction = UIAction(title: "Delete", image: nil, identifier: nil, discoverabilityTitle: nil, state: .off) { _ in
+                        CoreDataManager.shared.deleteItem(item: self?.carsArray[indexPath.row] ?? CarModel()) { result in
+                            switch result {
+                            case .success(): self?.reloadData()
+                            case .failure(let error): print(error.localizedDescription)
+                            }
+                        }
+                    }
+                    return UIMenu(title: "", image: nil, identifier: nil, options: .displayInline, children: [deleteAction])
+                }
+                return config
+            }
 }
+    
+
 
 // MARK: - UICollectionViewDelegateFlowLayout
 
 extension CarListViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.bounds.width, height: view.bounds.height/3.5)
+        return CGSize(width: view.bounds.width - 20, height: view.bounds.height/3.5)
     }
 }
