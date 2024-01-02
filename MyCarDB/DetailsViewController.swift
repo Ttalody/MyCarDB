@@ -42,7 +42,11 @@ final class DetailsViewController: UIViewController {
         super.viewDidLoad()
         
     
+        self.modelTextField.delegate = self
+        self.producerTextField.delegate = self
+        self.colorTextField.delegate = self
 
+        setupGestureRecognizer()
         
         setupSaveButton()
         setupImageView()
@@ -127,6 +131,14 @@ final class DetailsViewController: UIViewController {
         }
     }
     
+    private func setupGestureRecognizer() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(DetailsViewController.dissmissKeyboard))
+        self.view.addGestureRecognizer(tap)
+    }
+    
+    @objc private func dissmissKeyboard() {
+        self.view.endEditing(true)
+    }
     
     
 }
@@ -142,5 +154,12 @@ extension DetailsViewController: UIImagePickerControllerDelegate, UINavigationCo
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
+    }
+}
+
+extension DetailsViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
     }
 }
