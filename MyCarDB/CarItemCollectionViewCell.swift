@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CarItemCollectionViewCell: UICollectionViewCell {
+final class CarItemCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "CarItemCollectionViewCell"
     
