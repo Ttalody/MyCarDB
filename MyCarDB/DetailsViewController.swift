@@ -47,23 +47,17 @@ final class DetailsViewController: UIViewController {
         self.colorTextField.delegate = self
 
         setupGestureRecognizer()
-        
+        setupDatePicker()
         setupSaveButton()
         setupImageView()
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
-        
-        
-    }
-    
 
     func setupVC(model: CarModel) {
         carImageVIew.image = UIImage(data: model.image ?? Data())
         modelTextField.text = model.name
         producerTextField.text = model.producer
         colorTextField.text = model.color
+        yearPickerView.date = model.year ?? Date()
         
         objectId = model.objectID
     }
@@ -100,6 +94,19 @@ final class DetailsViewController: UIViewController {
         carImageVIew.layer.cornerRadius = 10
     }
     
+    private func setupDatePicker() {
+        yearPickerView.datePickerMode = .date
+        
+        let currentDate = Date()
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.year], from: currentDate)
+        let minDateComponents = DateComponents(year: components.year! - 100, month: 1, day: 1)
+        let maxDateComponents = DateComponents(year: components.year!, month: 12, day: 31)
+        yearPickerView.minimumDate = calendar.date(from: minDateComponents)
+        yearPickerView.maximumDate = calendar.date(from: maxDateComponents)
+
+    }
+    
     private func saveChanges() {
         guard let image = self.carImageVIew.image,
               let name = self.modelTextField.text,
@@ -110,7 +117,7 @@ final class DetailsViewController: UIViewController {
         let carItem = CarItemModel(image: image,
                                    name: name,
                                    producer: producer,
-                                   year: Date(),
+                                   year: yearPickerView.date,
                                    color: color)
         
         if let id = objectId {
@@ -139,8 +146,6 @@ final class DetailsViewController: UIViewController {
     @objc private func dissmissKeyboard() {
         self.view.endEditing(true)
     }
-    
-    
 }
 
 extension DetailsViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {

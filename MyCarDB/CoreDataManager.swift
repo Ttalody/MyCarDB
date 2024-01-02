@@ -58,7 +58,7 @@ final class CoreDataManager {
             let carItem = try context.existingObject(with: id)
             carItem.setValue(newItem.name, forKey: "name")
             carItem.setValue(newItem.producer, forKey: "producer")
-            carItem.setValue(newItem.image, forKey: "image")
+            carItem.setValue(newItem.image.pngData(), forKey: "image")
             carItem.setValue(newItem.color, forKey: "color")
             carItem.setValue(newItem.year, forKey: "year")
             
